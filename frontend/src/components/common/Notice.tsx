@@ -1,0 +1,1 @@
+export function Notice({error,message}:{error?:string;message?:string}){return <>{error&&<div className="notice error" role="alert">{error} <span>请检查输入后重试。</span></div>}{message&&<div className="notice success" role="status">{message}</div>}</>}

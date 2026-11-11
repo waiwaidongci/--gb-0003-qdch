@@ -1,0 +1,3 @@
+import type {Run} from '../types/domain';
+import {Badge} from './common/Badge';import {Table} from './common/Table';import {date} from '../utils/format';
+export function RunList({runs,onSelect}:{runs:Run[];onSelect:(r:Run)=>void}){return <Table headers={['研究编号 / 名称','状态','规则数','建立时间','']} >{runs.map(r=><tr key={r.id}><td><small>EXP / {String(r.id).padStart(3,'0')}</small><strong>{r.name}</strong></td><td><Badge status={r.status}/></td><td>{r.result.rules?.length??'—'}</td><td className="mono">{date(r.created_at)}</td><td><button className="text-button" onClick={()=>onSelect(r)}>查看结果 ↗</button></td></tr>)}</Table>}

@@ -1,0 +1,5 @@
+-- Schema is created from SQLAlchemy metadata at first startup.
+-- Production migration equivalent: users, products, receipt_batches, receipts,
+-- rule_runs, bundle_proposals, audit_logs. Natural keys: email, sku, batch name,
+-- and (batch_id, reference). Seed inserts only absent natural keys.
+-- This demo deliberately retains user edits when re-seeded.

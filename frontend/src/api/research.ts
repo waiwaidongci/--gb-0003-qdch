@@ -1,0 +1,3 @@
+import {request,post,download} from './client';
+import type {Run,Proposal} from '../types/domain';
+export const researchApi={runs:()=>request<Run[]>('/runs'),run:(id:number)=>request<Run>('/runs/'+id),queue:(data:any)=>post('/runs',data),proposals:()=>request<Proposal[]>('/proposals'),propose:(data:any)=>post('/proposals',data),review:(id:number,status:string,note:string)=>request('/proposals/'+id+'/review',{method:'PATCH',body:JSON.stringify({status,note})}),exportRules:(id:number)=>download('/runs/'+id+'/export','rules-'+id+'.csv'),exportProposals:()=>download('/proposals-export','proposals.csv')};
