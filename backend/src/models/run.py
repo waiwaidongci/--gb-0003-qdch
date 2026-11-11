@@ -7,6 +7,7 @@ class RuleRun(Base):
  id:Mapped[int]=mapped_column(primary_key=True)
  batch_id:Mapped[int]=mapped_column(ForeignKey('receipt_batches.id'))
  name:Mapped[str]=mapped_column(String(100))
+ # 状态机：queued -> running -> succeeded / failed；succeeded 为终态，任何重试不得覆盖
  status:Mapped[str]=mapped_column(String(20),default='queued')
  min_support:Mapped[float]=mapped_column(Float)
  min_confidence:Mapped[float]=mapped_column(Float)
@@ -14,5 +15,7 @@ class RuleRun(Base):
  max_size:Mapped[int]=mapped_column(Integer,default=3)
  result:Mapped[dict]=mapped_column(JSON,default=dict)
  error:Mapped[str|None]=mapped_column(String(1000),nullable=True)
+ # 同一研究被重复投递/重投的执行次数，用于留痕与中断恢复可观测
+ attempts:Mapped[int]=mapped_column(Integer,default=0,server_default='0')
  creator_id:Mapped[int]=mapped_column(ForeignKey('users.id'))
  created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc))

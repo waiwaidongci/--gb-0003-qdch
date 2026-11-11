@@ -3,3 +3,10 @@
 -- rule_runs, bundle_proposals, audit_logs. Natural keys: email, sku, batch name,
 -- and (batch_id, reference). Seed inserts only absent natural keys.
 -- This demo deliberately retains user edits when re-seeded.
+--
+-- gb-0004（数据发布链修复）增量变更，应用启动时由 _ensure_schema 幂等执行：
+--   ALTER TABLE rule_runs ADD COLUMN attempts INTEGER NOT NULL DEFAULT 0;
+-- 用途：记录同一研究被重复投递/中断重投的执行次数；状态机约定
+-- queued -> running -> succeeded / failed，其中 succeeded 为终态，任何重试
+-- 都不得覆盖已成功结果。结果文件由 src/services/artifacts.py 原子发布
+-- （临时文件 + fsync + rename），并在启动时对账补齐历史成功研究的缺失文件。

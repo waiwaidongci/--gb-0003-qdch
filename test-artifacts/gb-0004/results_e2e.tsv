@@ -1,0 +1,10 @@
+PASS	T1 页面/CSV/结果文件对应同一份完整结果	csv 行数=5, 规则数=5, checksum 一致=True
+PASS	T2 重复投递不覆盖已成功结果	status=succeeded, attempts 字段=1
+PASS	T3a 留痕失败落 failed 且无任何半成品文件	status=failed, tmp=[], 正式文件存在=False
+PASS	T3b 失败研究拒绝导出（409）	export=409, result-file=409
+PASS	T3c 失败研究重新投递后完整恢复	status=succeeded, 工件存在=True
+PASS	T4 RUNNING 中断后重新入队可恢复	status=succeeded
+PASS	T5 未完成研究不可下载（409）	export=409, result-file=409
+PASS	T6 成功研究拒绝重试且历史结果仍可查看下载	retry=409, detail=200, file=200
+PASS	T7 损坏文件下载时以数据库为准原子重建	http=200, 重建后完整=True
+PASS	T8 启动对账清理孤儿临时文件并补齐历史工件	summary={'removed_tmp': 1, 'repaired': 1}

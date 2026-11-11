@@ -2,7 +2,7 @@ from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
 from src.config.database import get_db
 from src.controllers.dependencies import current_user,writers,admins
-from src.controllers.research import export_rules,export_proposals
+from src.controllers.research import export_rules,export_proposals,download_result_file
 from src.services import runs,proposals
 from src.schemas.run import RunInput
 from src.schemas.proposal import ProposalInput,ReviewInput
@@ -14,8 +14,12 @@ def all_runs(db:Session=Depends(get_db),user=Depends(current_user)): return runs
 def queue(data:RunInput,db:Session=Depends(get_db),user=Depends(writers)): return runs.create_run(db,data,user)
 @router.get('/runs/{id}')
 def detail(id:int,db:Session=Depends(get_db),user=Depends(current_user)): return row(runs.get_run(db,id))
+@router.post('/runs/{id}/retry',status_code=202)
+def retry(id:int,db:Session=Depends(get_db),user=Depends(writers)): return runs.retry_run(db,id,user)
 @router.get('/runs/{id}/export')
 def export(id:int,db:Session=Depends(get_db),user=Depends(current_user)): return export_rules(db,id)
+@router.get('/runs/{id}/result-file')
+def result_file(id:int,db:Session=Depends(get_db),user=Depends(current_user)): return download_result_file(db,id)
 @router.get('/proposals')
 def all_proposals(db:Session=Depends(get_db),user=Depends(current_user)): return proposals.list_proposals(db)
 @router.post('/proposals',status_code=201)

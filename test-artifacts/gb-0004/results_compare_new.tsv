@@ -1,0 +1,3 @@
+PASS	[new] 故障后研究保持 succeeded（成功结果不被覆盖）	status=succeeded, error=None
+PASS	[new] 成功结果保留且规则数正确	has_result=True, rules=5
+PASS	[new] 结果文件完整、无半成品	工件完整=True

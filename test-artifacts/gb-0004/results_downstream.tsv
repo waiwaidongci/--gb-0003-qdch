@@ -1,0 +1,4 @@
+PASS	P1 成功研究的提案-审核-导出闭环	proposal=201, review=200, export=200
+PASS	P2 失败研究禁止建立提案（422）	status=422
+PASS	P3 审计留痕覆盖关键链路	actions=['auth.login', 'proposal.create', 'proposal.review', 'run.queue', 'run.retry', 'run.succeeded']
+PASS	P4 seed_demo 连续两次运行幂等且不覆盖	first=3 second=3

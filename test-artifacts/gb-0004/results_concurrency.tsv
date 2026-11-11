@@ -1,0 +1,4 @@
+PASS	C1 并发执行在留痕失败后安全落 failed	status=failed, has_result=False
+PASS	C2 失败不产生任何半成品（无 .tmp、无正式文件）	tmp=[], 正式文件存在=False
+PASS	C3 重新投递后研究完整成功，数据库结果与结果文件一致	status=succeeded, rules=5, checksum 一致=True
+PASS	C4 成功终态对重复投递幂等，结果不被覆盖	attempts 3 -> {'id': 1, 'status': 'succeeded', 'error': None, 'attempts': 3, 'has_result': True, 'rules': 5, 'checksum': 'b920b554ad5aa083751d0523f2243c5a3daff00e28fc9088e76cf2ca59654e87'}, status=succeeded
